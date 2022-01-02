@@ -1,31 +1,6 @@
 import NoteCard from "./NoteCard.js";
-import notes from "../data/notes.json";
-import { useEffect, useState } from "react";
 
-function NoteList() {
-  const [notesData, setNotesData] = useState();
-  const [notesDataError, setNotesDataError] = useState();
-
-  useEffect(() => {
-    async function getData() {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      try {
-        setNotesData(notes);
-      } catch (e) {
-        setNotesDataError(e);
-      }
-    }
-
-    getData();
-  });
-
-  if (notesDataError) {
-    return <div>error: {notesDataError}</div>;
-  }
-  if (!notesData) {
-    return <div>...loading</div>;
-  }
-
+function NoteList({ notesData }) {
   function sortByDate(a, b) {
     const dateA = a.createDate;
     const dateB = b.createDate;
