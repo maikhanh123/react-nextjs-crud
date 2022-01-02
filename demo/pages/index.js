@@ -1,10 +1,7 @@
-import { useState } from "react";
+import App from "../component/App";
 
 function IndexPage() {
-  // if (1 === 0) {
-  //   const [x, setX] = useState();
-  // }
-  return <div>Hello world</div>;
+  return <App />;
 }
 
 export default IndexPage;
