@@ -3,7 +3,8 @@ import useNotes from "../hooks/useNotes";
 import Menu from "./menu.js";
 
 function App() {
-  const { notesData, notesDataError, createNote } = useNotes();
+  const { notesData, notesDataError, createNote, updateNote, deleteNote } =
+    useNotes();
 
   if (notesDataError) {
     return <div>error: {notesDataError}</div>;
@@ -27,7 +28,11 @@ function App() {
   return (
     <div className="container">
       <Menu createNoteFn={createNoteFn} />
-      <NoteList notesData={notesData} />
+      <NoteList
+        notesData={notesData}
+        updateNote={updateNote}
+        deleteNote={deleteNote}
+      />
     </div>
   );
 }
