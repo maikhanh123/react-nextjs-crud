@@ -1,4 +1,9 @@
-function NoteCard({ note, updateNote, deleteNote }) {
+import { useContext } from "react";
+import { NotesContext } from "./App";
+
+function NoteCard({ note }) {
+  const { updateNote, deleteNote } = useContext(NotesContext);
+
   function editNoteFn(noteId) {
     updateNote(
       noteId,

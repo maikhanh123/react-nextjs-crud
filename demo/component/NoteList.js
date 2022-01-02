@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import NoteCard from "./NoteCard.js";
+import { NotesContext } from "./App";
 
-function NoteList({ notesData, updateNote, deleteNote }) {
+function NoteList() {
+  const { notesData } = useContext(NotesContext);
   function sortByDate(a, b) {
     const dateA = a.createDate;
     const dateB = b.createDate;
@@ -10,14 +13,7 @@ function NoteList({ notesData, updateNote, deleteNote }) {
   return (
     <div className="row tab-content bg-transparent note-has-grid">
       {notesData.sort(sortByDate).map((note) => {
-        return (
-          <NoteCard
-            note={note}
-            key={note.id}
-            updateNote={updateNote}
-            deleteNote={deleteNote}
-          />
-        );
+        return <NoteCard note={note} key={note.id} />;
       })}
     </div>
   );
