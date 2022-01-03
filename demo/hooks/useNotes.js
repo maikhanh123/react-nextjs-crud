@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
 import notes from "../data/notes.json";
+import noteAtributes from "../data/noteAtributes.json";
 import { v4 as uuidv4 } from "uuid";
 import useGeneralizedCrudMethods from "./useGeneralizedCrudMethods";
 
 function useNotes() {
-  // const [notesData, setNotesData] = useState();
-  // const [notesDataError, setNotesDataError] = useState();
-
   const {
     data: notesData,
     error: notesDataError,
@@ -15,17 +12,13 @@ function useNotes() {
     deleteRecord: deleteNotesData,
   } = useGeneralizedCrudMethods(notes);
 
-  //   useEffect(() => {
-  //     async function getData() {
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-  //       try {
-  //         setNotesData(notes);
-  //       } catch (e) {
-  //         setNotesDataError(e);
-  //       }
-  //     }
-  //     getData();
-  //   }, []);
+  const {
+    data: noteAttributesData,
+    error: noteAttributesDataError,
+    createRecord: createNoteAttributesData,
+    updateRecord: updateNoteAttributesData,
+    deleteRecord: deleteNoteAttributesData,
+  } = useGeneralizedCrudMethods(noteAtributes);
 
   function createNote(title, description) {
     const newNote = {
@@ -37,19 +30,46 @@ function useNotes() {
     createNotesData(newNote);
   }
 
-  function updateNote(id, title, description) {
+  function updateNote(id, title, description, pinned, important) {
     const updateObject = {
       title,
       description,
     };
     updateNotesData(id, updateObject);
+    const noteAtribute = noteAttributesData.find((rec) => rec.noteId === id);
+    if (noteAtribute) {
+      updateNoteAttributesData(noteAtribute.id, {
+        pinned: pinned === undefined ? undefined : Number(pinned),
+        important: important === undefined ? undefined : Number(important),
+        updateDate: new Date().toISOString(),
+      });
+    } else {
+      createNoteAttributesData({
+        id: uuidv4(),
+        noteId: id,
+        pinned: pinned === undefined ? undefined : Number(pinned),
+        important: important === undefined ? undefined : Number(important),
+        updateDate: new Date().toISOString(),
+      });
+    }
   }
 
   function deleteNote(id) {
     deleteNotesData(id);
+    noteAttributesData
+      .filter((rec) => rec.noteId === id)
+      .forEach((rec) => deleteNoteAttributesData(rec.id));
   }
 
-  return { notesData, notesDataError, createNote, updateNote, deleteNote };
+  return {
+    notesData,
+    notesDataError,
+    noteAttributesData,
+    noteAttributesDataError,
+    createNote,
+    updateNote,
+    deleteNote,
+  };
 }
 
 export default useNotes;
