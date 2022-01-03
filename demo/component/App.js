@@ -7,6 +7,8 @@ import useNotesModal from "../hooks/useNotesModal";
 export const NotesContext = createContext({
   notesData: [],
   notesDataError: [],
+  noteAttributesData: [],
+  noteAttributesDataError: [],
   createNote: () => {},
   updateNote: () => {},
   deleteNote: () => {},
