@@ -1,15 +1,22 @@
 import { useContext } from "react";
-import { NotesContext } from "./App";
+import { NotesContext, NotesModalContext } from "./App";
 
 function NoteCard({ note }) {
-  const { updateNote, deleteNote } = useContext(NotesContext);
+  const { notesData, deleteNote } = useContext(NotesContext);
+  const {
+    setModalNoteId,
+    setModalShow,
+    setModalNoteTitle,
+    setModalNoteDescription,
+  } = useContext(NotesModalContext);
 
   function editNoteFn(noteId) {
-    updateNote(
-      noteId,
-      undefined,
-      `${note.description} : Updated ` + new Date()
+    setModalNoteId(noteId);
+    setModalNoteTitle(notesData.find((rec) => rec.id === noteId).title);
+    setModalNoteDescription(
+      notesData.find((rec) => rec.id === noteId).description
     );
+    setModalShow(true);
   }
 
   function deleteNoteFn(noteId) {

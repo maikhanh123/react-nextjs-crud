@@ -1,19 +1,20 @@
 import { useContext } from "react";
-import { NotesContext } from "./App";
+import { NotesContext, NotesModalContext } from "./App";
 
 function Menu() {
   const { createNote } = useContext(NotesContext);
+  const {
+    setModalNoteId,
+    setModalNoteTitle,
+    setModalNoteDescription,
+    setModalShow,
+  } = useContext(NotesModalContext);
 
   function createNoteFn() {
-    const timeOfDay = new Date().toLocaleDateString("en", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    createNote(
-      `Note at ${timeOfDay}`,
-      `This sample note create at ${timeOfDay}`
-    );
+    setModalNoteId(0);
+    setModalNoteTitle("");
+    setModalNoteDescription("");
+    setModalShow(true);
   }
 
   return (

@@ -1,7 +1,8 @@
 import NoteList from "./NoteList.js";
 import useNotes from "../hooks/useNotes";
-import Menu from "./menu.js";
+import Menu from "./Menu.js";
 import { createContext } from "react";
+import useNotesModal from "../hooks/useNotesModal";
 
 export const NotesContext = createContext({
   notesData: [],
@@ -11,8 +12,20 @@ export const NotesContext = createContext({
   deleteNote: () => {},
 });
 
+export const NotesModalContext = createContext({
+  modalShow: false,
+  setModalShow: () => {},
+  modalNoteId: 0,
+  setModalNoteId: () => {},
+  modalTitle: "",
+  setModalTitle: () => {},
+  modalDescription: "",
+  setModalDescription: () => {},
+});
+
 function App() {
   const contextValue = useNotes();
+  const contextValueNotesModel = useNotesModal();
 
   if (contextValue.notesDataError) {
     return <div>error: {contextValue.notesDataError}</div>;
@@ -24,8 +37,10 @@ function App() {
   return (
     <div className="container">
       <NotesContext.Provider value={contextValue}>
-        <Menu />
-        <NoteList />
+        <NotesModalContext.Provider value={contextValueNotesModel}>
+          <Menu />
+          <NoteList />
+        </NotesModalContext.Provider>
       </NotesContext.Provider>
     </div>
   );
