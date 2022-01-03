@@ -1,15 +1,13 @@
 import NoteList from "./NoteList.js";
 import useNotes from "../hooks/useNotes";
-import Menu from "./Menu.js";
-import NoteChangeLogs from "./NoteChangeLogs.js";
-import { createContext, useState } from "react";
 import useNotesModal from "../hooks/useNotesModal";
+import Menu from "./Menu";
+import { createContext, useState } from "react";
+import NoteChangeLogs from "./NoteChangeLogs";
 
 export const NotesContext = createContext({
   notesData: [],
-  notesDataError: [],
-  noteAttributesData: [],
-  noteAttributesDataError: [],
+  notesDataError: "",
   createNote: () => {},
   updateNote: () => {},
   deleteNote: () => {},
@@ -31,21 +29,27 @@ export const NotesModalContext = createContext({
 });
 
 function App() {
-  const contextValue = useNotes();
-  const contextValueNotesModel = useNotesModal();
-  const [currentTab, setCurrentTab] = useState("notes"); // ["notes", "logs"]
+  function errorNotificationFn(errorMessage) {
+    console.log("App: Error", errorMessage);
+  }
+
+  const contextValue = useNotes(errorNotificationFn);
+  const contextValueNotesModal = useNotesModal();
+  const [currentTab, setCurrentTab] = useState("notes"); // ["notes","logs"]
 
   if (contextValue.notesDataError) {
-    return <div>error: {contextValue.notesDataError}</div>;
+    return (
+      <div className="container">error: {contextValue.notesDataError}</div>
+    );
   }
   if (!contextValue.notesData) {
-    return <div>...loading</div>;
+    return <div className="container">...loading</div>;
   }
 
   return (
     <div className="container">
       <NotesContext.Provider value={contextValue}>
-        <NotesModalContext.Provider value={contextValueNotesModel}>
+        <NotesModalContext.Provider value={contextValueNotesModal}>
           <Menu currentTab={currentTab} setCurrentTab={setCurrentTab} />
           {currentTab === "notes" && <NoteList />}
           {currentTab === "logs" && <NoteChangeLogs />}

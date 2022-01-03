@@ -18,11 +18,11 @@ function NotesModalBody() {
                 <div className="note-title">
                   <label>Note Title</label>
                   <input
-                    type="text"
                     value={modalNoteTitle}
                     onChange={(event) => {
                       setModalNoteTitle(event.target.value);
                     }}
+                    type="text"
                     className="form-control"
                     placeholder="Title"
                   />

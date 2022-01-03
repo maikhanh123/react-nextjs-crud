@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import { NotesContext, NotesModalContext } from "./App";
+import { useContext } from "react";
 
 function NoteCard({ note }) {
   const {
@@ -10,7 +10,6 @@ function NoteCard({ note }) {
     updateNote,
     deleteNote,
   } = useContext(NotesContext);
-
   const {
     setModalNoteId,
     setModalShow,
@@ -32,6 +31,7 @@ function NoteCard({ note }) {
         .filter((rec) => rec.noteId === noteId)
         .map((rec) => rec.tagId)
     );
+
     setModalShow(true);
   }
 

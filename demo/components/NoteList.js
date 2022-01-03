@@ -1,17 +1,19 @@
-import { useContext } from "react";
 import NoteCard from "./NoteCard.js";
 import { NotesContext } from "./App";
+import { useContext } from "react";
 import NotesModal from "./NotesModal/NotesModal";
 
 function NoteList() {
-  const { notesData, noteAttributesData } = useContext(NotesContext);
+  const { notesData, noteAttributesData, noteChangeLogsData } =
+    useContext(NotesContext);
+
   function sortByDate(a, b) {
     const dateA = a.createDate;
     const dateB = b.createDate;
     return dateA > dateB ? -1 : dateA < dateB ? 1 : 0;
   }
 
-  if (!(notesData && noteAttributesData)) return null;
+  if (!(notesData && noteAttributesData && noteChangeLogsData)) return null;
 
   const notesPinned = noteAttributesData
     .filter((na) => na.pinned === 1)

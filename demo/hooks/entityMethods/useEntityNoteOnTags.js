@@ -1,11 +1,11 @@
 import useGeneralizedCrudMethods from "../useGeneralizedCrudMethods";
-import noteOnTags from "../../data/noteOnTags";
 import { v4 as uuidv4 } from "uuid";
 
-function useEntityNoteOnTags() {
-  const { data, error, createRecord, deleteRecord } =
-    useGeneralizedCrudMethods(noteOnTags);
-
+function useEntityNoteOnTags(url, errorNotificationFn) {
+  const { data, error, createRecord, deleteRecord } = useGeneralizedCrudMethods(
+    url,
+    errorNotificationFn
+  );
   function updateNoteTags(tagIdsToSet, noteId) {
     if (!tagIdsToSet || !noteId) {
       return;
@@ -34,7 +34,6 @@ function useEntityNoteOnTags() {
       .map((rec) => rec.id);
     noteOnTagRecIdsToDelete.forEach((id) => deleteRecord(id));
   }
-
   function deleteNoteOnTagsByNoteId(noteId) {
     data.forEach((rec) => {
       if (rec.noteId === noteId) {
@@ -42,13 +41,7 @@ function useEntityNoteOnTags() {
       }
     });
   }
-
-  return {
-    data,
-    error,
-    updateNoteTags,
-    deleteNoteOnTagsByNoteId,
-  };
+  return { data, error, updateNoteTags, deleteNoteOnTagsByNoteId };
 }
 
 export default useEntityNoteOnTags;

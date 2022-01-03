@@ -1,5 +1,5 @@
+import { NotesModalContext } from "./App";
 import { useContext } from "react";
-import { NotesContext, NotesModalContext } from "./App";
 
 function Menu({ currentTab, setCurrentTab }) {
   const {
@@ -7,12 +7,16 @@ function Menu({ currentTab, setCurrentTab }) {
     setModalNoteTitle,
     setModalNoteDescription,
     setModalShow,
+    setTagNamesNewValue,
+    setModalNoteTagIds,
   } = useContext(NotesModalContext);
 
   function createNoteFn() {
     setModalNoteId(0);
     setModalNoteTitle("");
     setModalNoteDescription("");
+    setTagNamesNewValue("");
+    setModalNoteTagIds([]);
     setModalShow(true);
   }
 

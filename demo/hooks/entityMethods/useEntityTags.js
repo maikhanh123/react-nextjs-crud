@@ -1,9 +1,11 @@
 import useGeneralizedCrudMethods from "../useGeneralizedCrudMethods";
-import tags from "../../data/tags.json";
 import { v4 as uuidv4 } from "uuid";
 
-function useEntityTags() {
-  const { data, error, createRecord } = useGeneralizedCrudMethods(tags);
+function useEntityTags(url, errorNotificationFn) {
+  const { data, error, createRecord } = useGeneralizedCrudMethods(
+    url,
+    errorNotificationFn
+  );
 
   function createTagsAndMerge(tagIdsIn, tagNamesInString) {
     if (!tagIdsIn && !tagNamesInString) return undefined;

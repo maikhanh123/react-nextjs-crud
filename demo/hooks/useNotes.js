@@ -1,45 +1,46 @@
-import useEntityNoteAttributes from "./entityMethods/useEntityNoteAttributes";
 import useEntityNotes from "./entityMethods/useEntityNotes";
+import useEntityNoteAttributes from "./entityMethods/useEntityNoteAttributes";
 import useEntityNoteChangeLogs from "./entityMethods/useEntityNoteChangeLogs";
 import useEntityTags from "./entityMethods/useEntityTags";
 import useEntityNoteOnTags from "./entityMethods/useEntityNoteOnTags";
 
-function useNotes() {
+function useNotes(errorNotificationFn) {
   const {
     data: notesData,
     error: notesDataError,
     createNoteEntity,
     updateNoteEntity,
     deleteNoteEntity,
-  } = useEntityNotes();
+  } = useEntityNotes("/api/notes", errorNotificationFn);
 
   const {
     data: noteAttributesData,
     error: noteAttributesDataError,
     updateNoteAttributesEntity,
     deleteNoteAttributesEntity,
-  } = useEntityNoteAttributes();
+  } = useEntityNoteAttributes("/api/noteAttributes", errorNotificationFn);
 
   const {
     data: noteChangeLogsData,
     error: noteChangeLogsDataError,
     createNoteChangeLogsEntity,
-  } = useEntityNoteChangeLogs();
+  } = useEntityNoteChangeLogs("/api/noteChangeLogs", errorNotificationFn);
 
   const {
     data: tagsData,
     error: tagsDataError,
     createTagsAndMerge,
-  } = useEntityTags();
+  } = useEntityTags("/api/tags", errorNotificationFn);
 
   const {
     data: noteOnTagsData,
     error: noteOnTagsDataError,
     updateNoteTags,
     deleteNoteOnTagsByNoteId,
-  } = useEntityNoteOnTags();
+  } = useEntityNoteOnTags("/api/noteOnTags", errorNotificationFn);
 
   function createNote(title, description, tagIdsIn, tagNamesIn) {
+    // could create Id noteId here and pass in to createNoteEntity as alternative
     const noteId = createNoteEntity(title, description);
     createNoteChangeLogsEntity(noteId, "CREATE");
     const tagIds = createTagsAndMerge(tagIdsIn, tagNamesIn);
