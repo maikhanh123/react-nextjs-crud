@@ -1,4 +1,4 @@
-import App from "../component/App";
+import App from "../components/App";
 
 function IndexPage() {
   return <App />;
