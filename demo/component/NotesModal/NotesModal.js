@@ -1,6 +1,7 @@
 import NotesModalHeader from "./NotesModalHeader";
 import NotesModalBody from "./NotesModalBody";
 import NotesModalFooter from "./NotesModalFooter";
+import NotesModalTags from "./NotesModalTags";
 import { NotesModalContext } from "../App";
 import { useContext } from "react";
 
@@ -26,6 +27,7 @@ function NotesModal() {
           <div className="modal-content border-0">
             <NotesModalHeader />
             <NotesModalBody />
+            <NotesModalTags />
             <NotesModalFooter />
           </div>
         </div>

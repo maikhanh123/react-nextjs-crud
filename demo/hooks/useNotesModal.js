@@ -6,6 +6,8 @@ function useNotesModal() {
   const [modalNoteId, setModalNoteId] = useState(0);
   const [modalNoteTitle, setModalNoteTitle] = useState("");
   const [modalNoteDescription, setModalNoteDescription] = useState("");
+  const [tagNamesNewValue, setTagNamesNewValue] = useState("");
+  const [modalNoteTagIds, setModalNoteTagIds] = useState([]);
 
   return {
     modalShow,
@@ -17,6 +19,10 @@ function useNotesModal() {
     setModalNoteTitle,
     modalNoteDescription,
     setModalNoteDescription,
+    tagNamesNewValue,
+    setTagNamesNewValue,
+    modalNoteTagIds,
+    setModalNoteTagIds,
   };
 }
 
